@@ -1,13 +1,11 @@
 const form = document.getElementById("registrationForm");
 const tableBody = document.querySelector("#entriesTable tbody");
 
-
 window.onload = function () {
-  tableBody.innerHTML = ""; 
+  tableBody.innerHTML = "";
   const entries = JSON.parse(localStorage.getItem("user-entries")) || [];
   entries.forEach(displayEntry);
 };
-
 
 function calculateAge(dob) {
   const birthDate = new Date(dob);
@@ -40,16 +38,17 @@ form.addEventListener("submit", function (e) {
   const dob = document.getElementById("dob").value;
   const acceptTerms = document.getElementById("acceptTerms").checked;
 
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const age = calculateAge(dob);
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  // Validations
   const isNameValid = validateField("name", "Please fill this field", name === "");
-  const isEmailValid = validateField("email", "Please fill this field", email === "") &&
-                       validateField("email", "Invalid email format", !emailPattern.test(email));
+  const isEmailValid =
+    validateField("email", "Please fill this field", email === "") &&
+    validateField("email", "Invalid email format", !emailPattern.test(email));
   const isPasswordValid = validateField("password", "Please fill this field", password === "");
-  const isDobValid = validateField("dob", "Please fill this field", dob === "") &&
-                     validateField("dob", "Age must be between 18 and 55", age < 18 || age > 55);
+  const isDobValid =
+    validateField("dob", "Please fill this field", dob === "") &&
+    validateField("dob", "Age must be between 18 and 55", age < 18 || age > 55);
   const isTermsValid = validateField("terms", "Please accept the terms", !acceptTerms);
 
   if (!(isNameValid && isEmailValid && isPasswordValid && isDobValid && isTermsValid)) {
